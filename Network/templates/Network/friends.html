@@ -1,0 +1,75 @@
+{% extends 'Network/base.html' %}
+{% load static %}
+
+{% block content %}
+    
+    <div class="video-overlay header-text" style="padding-top: 200px; padding-left: 300px;">
+      <div class="caption">
+        <h1 style="color: rgb(255, 179, 0);">Friends of {{ pageOwner.user.last_name }} {{ pageOwner.user.first_name }}</h1>
+        <div class="main-button">
+          <!-- <div class="scroll-to-section"><a href="#section2">Lets chat</a></div> -->
+          <!-- <a href="?pageOwner=jisoo">koten</a> -->
+        </div>
+      </div>
+      <br>
+      <br>
+      
+      <table class="table" style="width: 1000px; color: rgb(173, 203, 0);">
+        
+        <tbody>
+          {% if friends %}
+            {% for friend in friends %}
+              <tr>
+                <th scope="row">
+                  {% if friend.photo %}
+                  <img class="rounded-circle" src="{{friend.photo.url}}" alt="100x100" style="width: 50px; height: 50px;">
+                  {% else %}
+                  <img class="rounded-circle" src="{% static 'Network/images/avatar.jpg' %}" alt="100x100" style="width: 50px; height: 50px;">
+                  {%endif%}
+                </th> 
+                <td>{{ friend.user.last_name }}</td>
+                <td>{{ friend.user.first_name }}</td>
+                <td><a href="{% url 'profile' friend.slug %}">@{{ friend.user.username }}</a></td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <h2 style="color:aliceblue;">You have no friends </h2>
+            <h5 style="color:aliceblue;">Please add some friends </h5>
+          {% endif %}
+        </tbody>
+      </table>
+
+      {% if friend_request_list|length > 0 and isOwner == True %}
+
+          <div class="caption">
+            <h1 style="color: rgb(255, 179, 0);">Friends requests</h1>
+          </div>
+          <br>
+          <br>
+
+          <table class="table" style="width: 1000px; color: rgb(173, 203, 0);">
+            <tbody>
+                {% for friend in friend_request_list %}
+                  <tr>
+                    <th scope="row">
+                      {% if friend.photo %}
+                      <img class="rounded-circle" src="{{friend.photo.url}}" alt="100x100" style="width: 50px; height: 50px;">
+                      {% else %}
+                      <img class="rounded-circle" src="{% static 'Network/images/avatar.jpg' %}" alt="100x100" style="width: 50px; height: 50px;">
+                      {%endif%}
+                    </th> 
+                    <td>{{ friend.user.last_name }}</td>
+                    <td>{{ friend.user.first_name }}</td>
+                    <td><a href="{% url 'profile' friend.slug %}">@{{ friend.user.username }}</a></td>
+                    <td><a href="{% url 'friend_action' friend.slug 'accept' %}">Accept ✓</a></td>
+                    <td><a href="{% url 'friend_action' friend.slug 'decline' %}">Decline X</a></td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+
+      {% endif %}
+    </div>
+
+    
+{% endblock %}

@@ -1,0 +1,14 @@
+1. Create authorization and registration.
+    Create profile page
+    Edit profile page
+    Change password
+    Delete Account
+
+2. Interaction between users:
+    Adding friend
+    Delete friend
+    Comment
+
+3. Chat System.
+    Create chat system 
+    Create temporary rooms for chat

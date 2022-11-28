@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{request.user.first_name}}</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" media="print" onload="this.media='all'"/>
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
+    </noscript>
+    <link href="{% static 'Network/css/font-awesome/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Network/css/mdb.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Network/css/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'Network/css/main.css' %}" rel="stylesheet">
+    <noscript>
+      <style type="text/css">
+        [data-aos] {
+            opacity: 1 !important;
+            transform: translate(0) scale(1) !important;
+        }
+      </style>
+    </noscript>
+  </head>
+
+  <body class="bg-light" id="top">
+   
+    <div class="page-content">
+      <div class="container">
+        <div class="resume-container">
+          <div class="shadow-1-strong bg-white my-5" id="intro">
+            <div class="bg-info text-white">
+              
+              {% if person.back %}
+              <div class="cover bg-image"><img src="{{ person.back.url }}"/>
+              {% else %}
+              <div class="cover bg-image"><img src="{% static 'Network/images/header-background.jpg' %}"/>
+              {% endif %}
+                
+                <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);backdrop-filter: blur(2px);">
+                  
+                  <a href="/{{profile}}" style="margin-left: 10px; color: rgb(252, 255, 240);">Profile</a>
+                  <div class="text-center p-5">
+                    
+                    {% if person.photo %}
+                    <div class="avatar p-1"><img class="img-thumbnail shadow-2-strong" src="{{ person.photo.url }}" width="160" height="160"/></div>
+                    {% else %}
+                    <div class="avatar p-1"><img class="img-thumbnail shadow-2-strong" src="{% static 'Network/images/avatar.jpg' %}" width="160" height="160"/></div>
+                    {% endif %}
+                      <div class="header-bio mt-3">
+
+                        <div data-aos="zoom-in" data-aos-delay="0">
+                         <h2 class="h1">{{ request.user.first_name }} {{ request.user.last_name }}</h2>
+                        </div>
+
+
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          <div class="shadow-1-strong bg-white my-5 p-5" id="about">
+            <div class="about-section">
+              <div class="row">
+                <div class="col-md-6">
+                  
+                  <h2 class="h2 fw-light mb-4">Change information about you</h2>
+                  
+                  <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <p>{{form.non_field_errors}}</p>
+
+                    {% if messages %}
+                      {% for message in messages %}
+                        {% if 'forms' in message.tags %}  
+                          <div class="alert alert-dismissible alert-success">
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                            <strong>{{message}}</strong>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+
+                    
+                    {% for f in form %}
+                      {{f.label}}
+                      {{f}}
+                      {{ f.errors }}
+                      <br>
+                    {% endfor %}
+
+                    <input class="btn btn-primary" type="submit" name="Update Information" value="send">
+                  </form>
+
+                </div>
+                
+                <div class="col-md-5 offset-lg-1">
+                    <div class="row mt-2">
+                        <h2 class="h2 fw-light mb-4">Change profile settings</h2>
+
+                        <form method="POST" class="form-input">
+                          {% csrf_token %}
+                          <p>{{form1.non_field_errors}}</p>
+
+                              {% if messages %}
+                                {% for message in messages %}
+                                  {% if "form-additional" in message.tags %}  
+                                    <div class="alert alert-dismissible alert-success">
+                                      <button type="button" class="close" data-dismiss="alert">x</button>
+                                      <strong>{{message}}</strong>
+                                    </div>
+                                  {% endif %}
+                                {% endfor %}
+                              {% endif %}
+
+                              {% for f in form1 %}
+                                {{f.label}}
+                                {{f}}
+                                {{ f.errors }}
+                                <br>
+                              {% endfor %}
+
+                              <input class="btn btn-primary" type="submit" name="additional" value="send">
+                        </form>
+
+                    </div>
+                </div>
+
+              </div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+    
+    <script src="{% static 'Network/scripts/mdb.min.js' %}"></script>
+    <script src="{% static 'Network/scripts/aos.js' %}"></script>
+    <script src="{% static 'Network/scripts/main.js' %}"></script>
+  </body>
+</html>

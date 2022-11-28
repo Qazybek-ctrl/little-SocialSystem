@@ -1,0 +1,95 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Register</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{% static 'Auth/css/style.css'%}">
+
+	</head>
+	<body class="img js-fullheight" style="background-image: url({% static 'Auth/images/bg.jpg' %});">
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">Register</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-4">
+					<div class="login-wrap p-0">
+					
+						<form class="signin-form" method="POST">
+						{% csrf_token %}
+
+						{% if messages %}
+							{% for message in messages %}
+								<div class="alert alert-dismissible alert-success">
+									<button type="button" class="close" data-dismiss="alert">
+										x
+									</button>
+									<strong>{{message}}</strong>
+								</div>
+							{% endfor %}
+						{% endif %}
+
+							{{ form.non_field_errors }}
+
+							{% for f in form %}
+								{% if f.label != 'Password' and f.label != 'Confirm password' %}
+									<div class="form-group">
+										{{ f }}
+										<span>{{ f.errors }}</p></span>
+									</div>
+								{% endif %}
+							{% endfor %}
+							
+							<div class="form-group">
+								{{ form.password1 }}
+								<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+							</div>
+							{{ form.errors.password1 }}
+							
+							<div class="form-group">
+								{{ form.password2 }}
+								<span toggle="#password-field1" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+							</div>
+							{{ form.errors.password2 }}
+							
+							<div class="form-group">
+								<button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+							</div>
+
+
+						</form>
+
+						<div class="form-group d-md-flex">
+							
+							<div class="w-50 text-md-right" style="margin-right: 25px; padding-right: 18px;">
+								<a href="{% url 'login' %}" style="color: #fff; margin-right: 15px">Already have an account?</a>
+							</div>
+
+							<div class="w-50 text-md-left">
+								<a href="{% url 'forgotPass' %}" style="color: #fff; padding-left: 15px">Forgot Password</a>
+							</div>
+						</div>
+
+	          
+		      		</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="{% static 'Auth/js/jquery.min.js' %}"></script>
+	<script src="{% static 'Auth/js/popper.js' %}"></script>
+  <script src="{% static 'Auth/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'Auth/js/main.js' %}"></script>
+
+	</body>
+</html>
+
